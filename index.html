@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ECI – Election Conducting Institute | Democracy Simulation</title>
+  <meta name="description" content="ECI is an AI-powered, multi-role simulation platform that lets you experience how Indian democracy works — from voter to judiciary to law enforcement." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="app-container">
+
+  <!-- ══════════════════════════════════════════
+       SCREEN 1: LANDING
+  ══════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════════
+       SCREEN 0: LOGIN
+  ══════════════════════════════════════════ -->
+  <section id="screen-login" class="screen active">
+    <div class="login-wrap">
+      <div class="login-card">
+        <!-- Header -->
+        <div class="login-header">
+          <div class="login-flag">🇮🇳</div>
+          <h1 class="login-title">ECI</h1>
+          <p class="login-sub">Election Conducting Institute</p>
+          <div class="tricolor-bar" style="justify-content:center;margin:1rem 0 0;"><div class="t1"></div><div class="t2"></div><div class="t3"></div></div>
+        </div>
+
+        <!-- Form -->
+        <div class="login-form">
+          <div class="login-field">
+            <label class="login-label" for="login-user">Username</label>
+            <input id="login-user" class="login-input" type="text" placeholder="e.g. voter1, cand2, judge1..." autocomplete="off" />
+          </div>
+          <div class="login-field">
+            <label class="login-label" for="login-pass">Password</label>
+            <input id="login-pass" class="login-input" type="password" placeholder="pass123 or admin123" />
+          </div>
+          <div class="login-error" id="login-error"></div>
+          <button class="btn-primary" id="btn-login" style="width:100%;justify-content:center;margin-top:0.5rem;">🔐 Login to Simulate</button>
+        </div>
+
+        <!-- Credentials Table -->
+        <div class="login-creds">
+          <div class="creds-toggle" id="creds-toggle">📋 Show Demo Credentials ▾</div>
+          <div class="creds-body" id="creds-body">
+            <div class="creds-group">
+              <div class="creds-role">🗳️ Voters</div>
+              <div class="creds-list">voter1 · voter2 · voter3 · voter4 · voter5 <span class="creds-pw">/ pass123</span></div>
+            </div>
+            <div class="creds-group">
+              <div class="creds-role">🎤 Candidates</div>
+              <div class="creds-list">cand1 · cand2 · cand3 · cand4 <span class="creds-pw">/ pass123</span></div>
+            </div>
+            <div class="creds-group">
+              <div class="creds-role">📺 Media</div>
+              <div class="creds-list">media1 · media2 · media3 · media4 <span class="creds-pw">/ pass123</span></div>
+            </div>
+            <div class="creds-group">
+              <div class="creds-role">⚖️ Judiciary</div>
+              <div class="creds-list">judge1 · judge2 · judge3 · judge4 <span class="creds-pw">/ pass123</span></div>
+            </div>
+            <div class="creds-group">
+              <div class="creds-role">🚔 Police</div>
+              <div class="creds-list">police1 · police2 · police3 · police4 <span class="creds-pw">/ pass123</span></div>
+            </div>
+            <div class="creds-group">
+              <div class="creds-role">🪖 Central Forces</div>
+              <div class="creds-list">force1 · force2 · force3 · force4 <span class="creds-pw">/ pass123</span></div>
+            </div>
+            <div class="creds-group">
+              <div class="creds-role">🏛️ Admin (Election)</div>
+              <div class="creds-list">blo1 · blo2 · deo1 · deo2 · ceo1 · ceo2 <span class="creds-pw">/ pass123</span></div>
+            </div>
+            <div class="creds-group">
+              <div class="creds-role">👑 CEC</div>
+              <div class="creds-list">cec1 <span class="creds-pw">/ admin123</span></div>
+            </div>
+            <div class="creds-group">
+              <div class="creds-role">🔭 Explorer</div>
+              <div class="creds-list">explorer <span class="creds-pw">/ demo</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SCREEN 1: LANDING
+  ══════════════════════════════════════════ -->
+  <section id="screen-landing" class="screen">
+    <div class="landing-badge">
+      <span>🇮🇳</span>
+      <span>AI-Powered Democracy Simulation</span>
+      <span style="color:var(--silver)">· India's Election Ecosystem</span>
+    </div>
+
+    <div class="tricolor-bar">
+      <div class="t1"></div>
+      <div class="t2"></div>
+      <div class="t3"></div>
+    </div>
+
+    <h1 class="landing-title">
+      ECI<br/>
+      <span class="accent-green">Election Conducting</span><br/>
+      Institute
+    </h1>
+
+    <p class="landing-subtitle">
+      Step into the shoes of voters, candidates, media, judiciary, and law enforcement.
+      Navigate real election scenarios, make ethical decisions, and discover how democracy
+      actually works — and how it can fail.
+    </p>
+
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;">
+      <button class="btn-primary" id="btn-enter">
+        🗳️ Enter the Simulation
+      </button>
+      <button class="btn-secondary" onclick="document.getElementById('about-section').scrollIntoView({behavior:'smooth'})">
+        Learn More ↓
+      </button>
+    </div>
+
+    <div class="landing-stats">
+      <div class="stat-item">
+        <div class="stat-number">6</div>
+        <div class="stat-label">Playable Roles</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">17+</div>
+        <div class="stat-label">Live Scenarios</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">5</div>
+        <div class="stat-label">Democracy Metrics</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">15</div>
+        <div class="stat-label">Badges to Earn</div>
+      </div>
+    </div>
+
+    <!-- About section -->
+    <div id="about-section" style="max-width:860px;margin:6rem auto 2rem;padding:0 1rem;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;">
+        <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);padding:1.5rem;">
+          <div style="font-size:2rem;margin-bottom:0.75rem;">🎮</div>
+          <h3 style="font-family:'Outfit',sans-serif;font-size:1.1rem;margin-bottom:0.5rem;">Gamified Learning</h3>
+          <p style="color:var(--silver);font-size:0.88rem;line-height:1.6;">Earn XP, unlock badges, and climb the leaderboard as you make real democratic decisions under pressure.</p>
+        </div>
+        <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);padding:1.5rem;">
+          <div style="font-size:2rem;margin-bottom:0.75rem;">⚡</div>
+          <h3 style="font-family:'Outfit',sans-serif;font-size:1.1rem;margin-bottom:0.5rem;">Real Consequences</h3>
+          <p style="color:var(--silver);font-size:0.88rem;line-height:1.6;">Every choice dynamically shifts Fairness, Trust, Law & Order, Turnout, and Misinformation levels in real time.</p>
+        </div>
+        <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);padding:1.5rem;">
+          <div style="font-size:2rem;margin-bottom:0.75rem;">🏛️</div>
+          <h3 style="font-family:'Outfit',sans-serif;font-size:1.1rem;margin-bottom:0.5rem;">Authentic Scenarios</h3>
+          <p style="color:var(--silver);font-size:0.88rem;line-height:1.6;">Scenarios drawn from real Indian election law — MCC, RPA 1951, SC precedents, EVM procedures & more.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SCREEN 2: ROLE SELECTION
+  ══════════════════════════════════════════ -->
+  <section id="screen-roles" class="screen">
+    <div style="padding:2.5rem 2rem 0;max-width:1100px;width:100%;margin:0 auto;">
+      <button class="btn-secondary" onclick="showScreen('landing')" style="margin-bottom:2rem;">
+        ← Back to Home
+      </button>
+      <div class="screen-header">
+        <h2>Choose Your Role</h2>
+        <p>Select the democratic actor you want to play and shape India's election story</p>
+      </div>
+    </div>
+    <div class="roles-grid" id="roles-grid" style="max-width:1100px;width:100%;margin:0 auto;padding:0 2rem 3rem;"></div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SCREEN 3: SIMULATION DASHBOARD
+  ══════════════════════════════════════════ -->
+  <section id="screen-dashboard" class="screen">
+
+    <!-- Top Bar -->
+    <div class="dashboard-topbar">
+      <div class="topbar-brand">
+        <span class="flag">🇮🇳</span>
+        <span>ECI Simulation</span>
+      </div>
+      <div class="role-pill" id="topbar-role"></div>
+      <div class="xp-display">
+        <span class="xp-icon">⚡</span>
+        <span id="xp-count">0 XP</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn-switch-role" id="btn-switch-role">🔄 Switch Role</button>
+        <button class="btn-icon" id="btn-logout" title="Logout" style="background:rgba(220,38,38,0.15);border-color:rgba(220,38,38,0.3);">⏻</button>
+      </div>
+    </div>
+
+    <!-- Role Switcher Drawer -->
+    <div class="role-switcher-drawer" id="role-switcher-drawer">
+      <div class="rsd-header">
+        <span>🎭 Switch Your Role — try any perspective</span>
+        <button class="btn-icon" id="btn-close-drawer">✕</button>
+      </div>
+      <div class="rsd-grid" id="rsd-grid"></div>
+    </div>
+
+    <!-- Metrics Bar -->
+    <div class="metrics-bar">
+      <div class="metric-item metric-fairness">
+        <div class="metric-label">⚖️ Fairness Index</div>
+        <div class="metric-bar-wrap"><div class="metric-bar-fill" id="metric-fairness-fill" style="width:70%"></div></div>
+        <div class="metric-value" id="metric-fairness-val">70%</div>
+      </div>
+      <div class="metric-item metric-trust">
+        <div class="metric-label">🤝 Public Trust</div>
+        <div class="metric-bar-wrap"><div class="metric-bar-fill" id="metric-trust-fill" style="width:65%"></div></div>
+        <div class="metric-value" id="metric-trust-val">65%</div>
+      </div>
+      <div class="metric-item metric-order">
+        <div class="metric-label">🚔 Law & Order</div>
+        <div class="metric-bar-wrap"><div class="metric-bar-fill" id="metric-order-fill" style="width:75%"></div></div>
+        <div class="metric-value" id="metric-order-val">75%</div>
+      </div>
+      <div class="metric-item metric-turnout">
+        <div class="metric-label">🗳️ Voter Turnout</div>
+        <div class="metric-bar-wrap"><div class="metric-bar-fill" id="metric-turnout-fill" style="width:60%"></div></div>
+        <div class="metric-value" id="metric-turnout-val">60%</div>
+      </div>
+      <div class="metric-item metric-misinfo">
+        <div class="metric-label">📡 Misinformation</div>
+        <div class="metric-bar-wrap"><div class="metric-bar-fill" id="metric-misinfo-fill" style="width:30%"></div></div>
+        <div class="metric-value" id="metric-misinfo-val" style="color:#34D399">30%</div>
+      </div>
+    </div>
+
+    <!-- Dashboard Body -->
+    <div class="dashboard-content">
+
+      <!-- Main Scenario Panel -->
+      <div class="main-panel">
+        <div class="scenario-progress">
+          <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+          <span class="progress-label" id="progress-label">0/3 complete</span>
+        </div>
+
+        <div class="scenario-header">
+          <span class="scenario-emoji" id="scenario-emoji">📋</span>
+          <div class="scenario-meta">
+            <div class="scenario-number" id="scenario-number">Scenario 1 of 3</div>
+            <div class="scenario-title" id="scenario-title">Loading...</div>
+          </div>
+        </div>
+
+        <div class="scenario-desc" id="scenario-desc">
+          Your scenario is loading. Please wait.
+        </div>
+
+        <div class="choices-label">What do you do?</div>
+        <div class="choices-grid" id="choices-grid"></div>
+      </div>
+
+      <!-- Side Panel -->
+      <div class="side-panel">
+        <!-- Live Event Feed -->
+        <div class="feed-title">
+          <div class="feed-dot"></div>
+          Live Election Feed
+        </div>
+        <div class="feed-list" id="feed-list"></div>
+
+        <!-- Leaderboard -->
+        <div class="lb-title">🏆 Leaderboard</div>
+        <div class="lb-list" id="lb-list"></div>
+
+        <!-- Quick Tips -->
+        <div style="margin-top:1.5rem;background:rgba(255,107,0,0.06);border:1px solid rgba(255,107,0,0.2);border-radius:var(--radius-sm);padding:1rem;">
+          <div style="font-family:'Outfit',sans-serif;font-size:0.8rem;font-weight:700;color:var(--saffron);margin-bottom:0.5rem;">💡 Did You Know?</div>
+          <p style="font-size:0.8rem;color:var(--silver);line-height:1.6;" id="tip-text">India's Election Commission is one of the most independent electoral bodies in the world, established by the Constitution under Article 324.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SCREEN 4: RESULTS
+  ══════════════════════════════════════════ -->
+  <section id="screen-results" class="screen">
+    <div class="results-container">
+      <div class="results-header">
+        <div style="font-size:1rem;color:var(--silver);margin-bottom:0.5rem;">Simulation Complete</div>
+        <div class="results-score" id="results-score">—</div>
+        <div class="results-label">Democracy Health Score</div>
+        <div class="results-title" id="results-title"></div>
+      </div>
+
+      <div class="results-metrics">
+        <div class="results-metric">
+          <div class="results-metric-value" id="res-fairness" style="color:#818CF8">—</div>
+          <div class="results-metric-label">⚖️ Fairness</div>
+        </div>
+        <div class="results-metric">
+          <div class="results-metric-value" id="res-trust" style="color:#34D399">—</div>
+          <div class="results-metric-label">🤝 Public Trust</div>
+        </div>
+        <div class="results-metric">
+          <div class="results-metric-value" id="res-order" style="color:#60A5FA">—</div>
+          <div class="results-metric-label">🚔 Law & Order</div>
+        </div>
+        <div class="results-metric">
+          <div class="results-metric-value" id="res-turnout" style="color:var(--saffron)">—</div>
+          <div class="results-metric-label">🗳️ Turnout</div>
+        </div>
+        <div class="results-metric">
+          <div class="results-metric-value" id="res-xp" style="color:var(--gold)">—</div>
+          <div class="results-metric-label">⚡ XP Earned</div>
+        </div>
+      </div>
+
+      <div class="badges-section">
+        <h3>Badges Earned</h3>
+        <div class="badges-grid" id="results-badges"></div>
+      </div>
+
+      <div class="results-actions">
+        <button class="btn-primary" id="btn-play-again">🔄 Play Again</button>
+        <button class="btn-secondary" id="btn-new-role">🎭 Try Another Role</button>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end app-container -->
+
+<!-- ══════════════════════════════════════════
+     ROLE SWITCHER MODAL
+══════════════════════════════════════════ -->
+<div class="intro-modal" id="switch-confirm-modal">
+  <div class="intro-modal-card">
+    <div class="intro-modal-icon" id="sc-icon">🎭</div>
+    <div class="intro-modal-title" id="sc-title">Switch Role?</div>
+    <div class="intro-modal-desc" id="sc-desc">Your current progress will be saved to the leaderboard. You'll start fresh in the new role.</div>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-primary" id="sc-confirm">Yes, Switch →</button>
+      <button class="btn-secondary" id="sc-cancel">← Stay Here</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     INTRO MODAL
+══════════════════════════════════════════ -->
+<div class="intro-modal" id="intro-modal">
+  <div class="intro-modal-card">
+    <div class="intro-modal-icon" id="intro-icon">🗳️</div>
+    <div class="intro-modal-title" id="intro-title">You are the Voter</div>
+    <div class="intro-modal-desc" id="intro-desc"></div>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-primary" id="intro-start">Begin Simulation →</button>
+      <button class="btn-secondary" onclick="document.getElementById('intro-modal').classList.remove('active')">← Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     FEEDBACK OVERLAY
+══════════════════════════════════════════ -->
+<div class="feedback-overlay" id="feedback-overlay">
+  <div class="feedback-card">
+    <div class="feedback-result-icon" id="fb-icon">✅</div>
+    <div class="feedback-verdict" id="fb-verdict">Excellent Decision!</div>
+    <div class="feedback-text" id="fb-text"></div>
+    <div class="feedback-impacts" id="fb-impacts"></div>
+    <div class="feedback-xp" id="fb-xp">+0 XP</div>
+    <div class="feedback-badge" id="fb-badge" style="display:none;"></div>
+    <button class="btn-primary" id="fb-next" style="margin-top:0.5rem;">Next Scenario →</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="scenarios.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
